@@ -39,7 +39,19 @@ and just have `Nothing :: Maybe Colour` to be the expected thing associated with
 but then the user still has the option of providing a Colour, where really we want to somehow indicate that BMP *has* to be paired with Nothing. here we can use a phantom type of kind Bool to indicate if the Picture has a Colour or not, and use a GADT constructor to ensure the type returned by the BMP constructor is False, and have a singletons version of Maybe for storing the colour so it can be specified by this type level Bool that it is Nothing for BMPs.
 
 ```
-etc
+data SMaybe (isJust :: Bool) a where
+ Nothing ::      SMaybe 'False a
+ Just    :: a -> SMaybe 'True  a
+
+type Pos = (Int,Int)
+type Colour = (Int,Int,Int)
+data Picture (hasColour :: Bool) = Picture {picturePlacement :: Pos,pictureColour :: SMaybe hasColour  Colour,getPicture :: PictureType hasColour}
+
+data PictureType (hasColour :: Bool) where
+ Point :: Int        -> PictureType 'True
+ Line  :: Pos -> Pos -> PictureType 'True
+ BMP   :: (Int,Int) -> ((Int,Int) -> (Int,Int,Int))
+                     -> PictureType 'False
 ```
 
 then, we could have the phantom type take lables corresponding to each of the constructors, and have a type family to specify the association of each picture type to the Boolean indicating if it has a colour - a HasColour type family taking these lables as arguments and returning types of kind Bool. this type family can then be used in place of the Maybe Colour to specify if it is Just or Nothing. 
