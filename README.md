@@ -65,8 +65,9 @@ type family HasColour (p :: PictureTypeLabel) :: * -> * where
  HasColour Line_  = SMaybe True
  HasColour BMP_   = SMaybe False
 
-data Picture (p :: PictureTypeLabel) = Picture {picturePlacement :: Pos,pictureColour :: HasColour p Colour,getPicture :: PictureType p}
-
+data Picture (p :: PictureTypeLabel) = Picture {picturePlacement :: Pos,
+                                                pictureColour :: HasColour p Colour,
+                                                getPicture :: PictureType p}
 
 data PictureType (hasColour :: PictureTypeLabel) where
  Point :: Int        -> PictureType 'Point_
