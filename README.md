@@ -57,4 +57,21 @@ data PictureType (hasColour :: Bool) where
 then, we could have the phantom type take lables corresponding to each of the constructors, and have a type family to specify the association of each picture type to the Boolean indicating if it has a colour - a HasColour type family taking these lables as arguments and returning types of kind Bool. this type family can then be used in place of the Maybe Colour to specify if it is Just or Nothing. 
 This is the coding style that this post was supposed to demonstrate. having a datatype of labels corresponding to the constructors which can be used with a type family as an argument to fix the types which depend on which Constructor is being used.  
 
+```
+data PictureTypeLabel = Point_ | Line_ | BMP_
+
+type family HasColour (p :: PictureTypeLabel) :: * -> * where
+ HasColour Point_ = SMaybe True
+ HasColour Line_  = SMaybe True
+ HasColour BMP_   = SMaybe False
+
+data Picture (p :: PictureTypeLabel) = Picture {picturePlacement :: Pos,pictureColour :: HasColour p Colour,getPicture :: PictureType p}
+
+
+data PictureType (hasColour :: PictureTypeLabel) where
+ Point :: Int        -> PictureType 'Point_
+ Line  :: Pos -> Pos -> PictureType 'Line_
+ BMP   :: (Int,Int) -> ((Int,Int) -> (Int,Int,Int))
+                     -> PictureType 'BMP_
+```
 
