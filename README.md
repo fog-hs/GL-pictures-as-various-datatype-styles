@@ -44,7 +44,7 @@ data SMaybe (isJust :: Bool) a where
  Just    :: a -> SMaybe 'True  a
 
 data Picture (hasColour :: Bool) = Picture {picturePlacement :: Pos,
-                                            pictureColour :: SMaybe hasColour  Colour,
+                                            pictureColour :: SMaybe hasColour Colour,
                                             getPicture :: PictureType hasColour}
 
 data PictureType (hasColour :: Bool) where
