@@ -69,7 +69,7 @@ data Picture (p :: PictureTypeLabel) = Picture {picturePlacement :: Pos,
                                                 pictureColour :: HasColour p Colour,
                                                 getPicture :: PictureType p}
 
-data PictureType (hasColour :: PictureTypeLabel) where
+data PictureType (p :: PictureTypeLabel) where
  Point :: Int        -> PictureType 'Point_
  Line  :: Pos -> Pos -> PictureType 'Line_
  BMP   :: (Int,Int) -> ((Int,Int) -> (Int,Int,Int))
