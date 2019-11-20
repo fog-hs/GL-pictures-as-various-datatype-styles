@@ -76,3 +76,4 @@ data PictureType (p :: PictureTypeLabel) where
                      -> PictureType 'BMP_
 ```
 
+by specifying which of its sum fields a value of some datatype is, this information can be used to specify the types that appear in the records - allowing the datatype to have different types depending on the choice of which field of an internal sum datatype is used by specifying this as a phantom type akin to singletons. 
