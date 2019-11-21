@@ -19,12 +19,9 @@ here, a "Picture" is a pair of a postion (Pos) and a PictureType representing va
 the consideration which motivated this pairing with postition was noting that GL pictures can be "translated" but without having first fixed them to a canvas of given dimensions.
 then it is natural to ask if there are any other properties that can be placed in this tuple of properties associated to a particular PictureType, where Colour seems like a perfect example, except that it is not natural to associate a colour to a bitmap... how can we resolve this?
 
+the first way we could approach this would be just to have;
 ```
 type Colour = (Int,Int,Int)
-```
-the first way we could approach this would be just to have;
-
-```
 data Picture = Picture {picturePlacement :: Pos,pictureColour :: Colour,getPicture :: PictureType}
 ```
 
